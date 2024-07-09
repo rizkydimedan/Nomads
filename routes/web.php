@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DetailController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\TravelPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,7 @@ use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/detail', [DetailController::class, 'index'])->name('detail');
-Route::get('/checkout',[CheckoutController::class,'index'])->name('checkout');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::get('/success', [CheckoutController::class, 'success'])->name('checkout-success');
 
 
@@ -34,9 +36,11 @@ Route::get('/success', [CheckoutController::class, 'success'])->name('checkout-s
 //     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 // });
 
-Route::middleware(['auth', 'verified', 'admin'])->group(function(){
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
-    
+
+    // Route::resource('travel-package', 'TravelPackageController');
+    Route::resource('travel-package', TravelPackageController::class);
 });
 
 
@@ -47,4 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
-require __DIR__.'/auth.php';
+
+Route::get('/only-verified',function(){
+    return view('auth.verified');
+})->middleware(['auth', 'verified']);
+require __DIR__ . '/auth.php';
