@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->longText('about');
             $table->string('location');
+            $table->string('featured_event');
             $table->string('language');
             $table->string('foods');
             $table->date('departured_date');

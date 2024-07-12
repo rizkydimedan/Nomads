@@ -9,11 +9,15 @@ class TravelPackage extends Model
 {
     use HasFactory;
     use SoftDeletes;
-   protected $fillabel = [
-    'title', 'slug', ' location', 'anout', 'featured_event', 'laguage', 'food', 'departure_date', 'duration', 'type', 'price'
+   protected $fillable = [
+    'title', 'slug', 'location', 'about', 'featured_event', 'language', 'foods', 'departured_date', 'duration', 'type', 'price'
    ];
 
    protected $hidden = [
 
    ];
+
+   public function galleries(){
+    return $this->hasMany(Gallery::class, 'travel_packages_id', 'id');
+   }
 }
