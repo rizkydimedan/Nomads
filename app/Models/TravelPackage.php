@@ -18,6 +18,10 @@ class TravelPackage extends Model
    ];
 
    public function galleries(){
-    return $this->hasMany(Gallery::class, 'travel_packages_id', 'id');
+    return $this->hasMany(Gallery::class, 'packages_id', 'id');
+   }
+
+   public function transaction(){
+    return $this->hasMany(Transaction::class, 'travel_packages_id', 'id');
    }
 }

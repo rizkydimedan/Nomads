@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_id');
+            $table->foreignId('transaction_id')->constrained(table: 'transactions', indexName: 'transactions_id');
             $table->string('username');
             $table->string('nationality');
             $table->boolean('is_visa');
-            $table->date('doe_password');
+            $table->date('doe_passport');
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }
