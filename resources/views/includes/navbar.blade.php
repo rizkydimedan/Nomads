@@ -2,7 +2,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('home') }}"><img src="frontend/images/logo.png" alt="logo Nomads"></a>
+            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ url('frontend/images/logo.png') }}" alt="logo Nomads"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navb"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -13,7 +13,7 @@
                         <a class="nav-link active" href="{{ route('home') }}">Home</a>
                     </li>
                     <li class="nav-item mx-md-2">
-                        <a class="nav-link" href="{{ route('detail') }}">Paket Travel</a>
+                        <a class="nav-link" href="{{ url('detail') }}">Paket Travel</a>
                     </li>
                     <li class="nav-item mx-md-2 dropdown">
                         <a class="nav-link dropdown-toggle" href="{{ route('home') }}" role="button"

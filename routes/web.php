@@ -24,12 +24,19 @@ use App\Http\Controllers\Admin\TravelPackageController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/detail', [DetailController::class, 'index'])->name('detail');
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-Route::get('/success', [CheckoutController::class, 'success'])->name('checkout-success');
+Route::get('/detail/{slug}', [DetailController::class, 'index'])->name('detail');
 
+// Checkout
+Route::post('/checkout/{id}', [CheckoutController::class, 'process'])->name('checkout_process')->middleware(['auth', 'verified']);
 
+Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout')->middleware(['auth', 'verified']);
 
+Route::post('/checkout/create/{detail_id}', [CheckoutController::class, 'create'])->name('checkout_create')->middleware(['auth', 'verified']);
+
+Route::post('/checkout/remove/{detail_id}', [CheckoutController::class, 'remove'])->name('checkout_remove')->middleware(['auth', 'verified']);
+
+Route::post('/checkout/confirm/{id}', [CheckoutController::class, 'confirm'])->name('checkout_success')->middleware(['auth', 'verified']);
+// End checkout
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
