@@ -12,7 +12,7 @@ class Transaction extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'packages_id', 'user_id', 'additional_visa', 'transaction_total', 'transaction_status'
+        'travel_packages_id', 'user_id', 'additional_visa', 'additional_total', 'transaction_status'
     ];
 
     protected $hidden = [];

@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <th>Total Transaksi</th>
-                    <td>${{ $item->transaction_total }}</td>
+                    <td>${{ $item->additional_total }}</td>
                 </tr>
                 <tr>
                     <th>Status Transaksi</th>
