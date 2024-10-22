@@ -30,7 +30,7 @@
                     <div class="col-lg-8 pl-lg-0">
                         <div class="card card-details">
                             @if ($errors->any())
-                                <div class="alert alert-danger">
+                                <div class="alert alert-danger text-white">
                                     <ul>
                                         @foreach ($errors as $error)
                                             <li>{{ $error }}</li>

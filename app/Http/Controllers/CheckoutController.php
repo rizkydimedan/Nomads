@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Carbon\Carbon;
+use Midtrans\Snap;
+use Midtrans\Config;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+
 use App\Models\TravelPackage;
 use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\Auth;
-
 
 class CheckoutController extends Controller
 {
@@ -101,6 +104,40 @@ class CheckoutController extends Controller
         $transaction = Transaction::findOrFail($id);
         $transaction->transaction_status = "PENDING";
         $transaction->save();
+
+        // set Konfigurasi Midtrans
+        Config::$serverKey = config('midtrans.serverKey');
+        Config::$isProduction = config('midtrans.isProduction');
+        Config::$isSanitized = config('midtrans.isSanitized');
+        Config::$is3ds = config('midtrans.is3ds');
+
+        // Buat array untuk dikirim ke midtrans
+        $midtrans_parameter = [
+            'transaction_details' => [
+                'order_id' => 'MIDTRANS', $transaction->id,
+                'gross_amount' =>(int) $transaction->additional_total,
+
+            ],
+            'customer_details' => [
+                'first_name' => $transaction->user->name,
+                'email' => $transaction->user->email,
+            ],
+            'enabled_payments' => ['gopay'],
+            'vtweb' => []
+            ];
+
+            try {
+                // ambill halaman payment midtrans
+                $paymentUrl =  $paymentUrl = Snap::createTransaction($midtrans_parameter)->redirect_url;
+
+                // redirect ke halaman midtrans
+                header('Location: ' . $paymentUrl);
+            } catch (Exception $e){
+                echo $e->getMessage();
+                
+            }
+
+
         return view('pages.success');
     }
 }
